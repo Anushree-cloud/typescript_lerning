@@ -1,25 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import InputField from './components/input_field/InputField';
+import TodoList from './components/todolist/TodoList';
+import { Todo } from './model';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+const App:React.FC = () => {
+
+  const [todo, setTodo] = useState<string | number>("")
+  const [todos, setTodos] = useState<Todo[]>([
+    {
+      id: 1,
+      todo: "Learn Typescript",
+      isDone: false
+    },
+    {
+      id: 2,
+      todo: "Resolve Pending Issues",
+      isDone: true
+    },
+    {
+      id: 3,
+      todo: "Playing Ukelele",
+      isDone: false
+    },
+  ])
+
+  const handleAddTodo = (e:React.FormEvent) => {
+    e.preventDefault()
+    if(!todo) toast.error('Type some todos first!')
+    if(todo){
+      setTodos([...todos, {id:Date.now(), todo, isDone:false}])
+      setTodo("")
+      toast.warn('New Todo Added!')
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <div className='heading'>My Todo List</div>
+        <InputField todo={todo} setTodo={setTodo} handleAddTodo={handleAddTodo} />
+        <div className='divider'></div>
+        <TodoList todos={todos} setTodos={setTodos} />
+        <ToastContainer 
+          position='top-right'
+          autoClose={5000}
+          hideProgressBar
+        />
+      </div>
+    </>
   );
 }
 

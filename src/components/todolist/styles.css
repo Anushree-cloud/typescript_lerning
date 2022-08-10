@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap');
+/* font-family: 'Mouse Memoirs', sans-serif; */
+
+.list {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    flex-wrap: wrap;
+    margin-top: 0;
+}
